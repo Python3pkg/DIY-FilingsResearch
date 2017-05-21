@@ -49,7 +49,7 @@ class Indexer(threading.Thread):
                 try:
                     path = os.path.join(self.root, filename)
                     file = open(path)
-                    contents = unicode(file.read(), 'iso-8859-1')
+                    contents = str(file.read(), 'iso-8859-1')
                     file.close()
                     doc = Document()
                     doc.add(Field("name", filename, TextField.TYPE_STORED))
@@ -59,11 +59,11 @@ class Indexer(threading.Thread):
                         doc.add(Field("contents", contents,
                             TextField.TYPE_STORED))
                     else:
-                        print "warning: the file is empty %s" % filename
+                        print("warning: the file is empty %s" % filename)
                     self.writer.addDocument(doc)
                     self.writer.commit()
-                except Exception, e:
-                    print "Failed in indexDocs:", e
+                except Exception as e:
+                    print("Failed in indexDocs:", e)
 
 
 class Queryer():
@@ -105,19 +105,19 @@ class Queryer():
         searcher = IndexSearcher(DirectoryReader.open(\
         SimpleFSDirectory.open(File(self.store_dir))))
         while True:
-            print
-            print "Hit enter with no input to quit."
-            command = raw_input("Query:")
+            print()
+            print("Hit enter with no input to quit.")
+            command = input("Query:")
             if command == '':
                 return
 
-            print "Searching for:", command
+            print("Searching for:", command)
             query = QueryParser(Version.LUCENE_43, "contents",
                 analyzer).parse(command)
 
             # We'll just show the top 10 matching documents for now
             scoreDocs = searcher.search(query, 10).scoreDocs
-            print "%s total matching documents." % len(scoreDocs)
+            print("%s total matching documents." % len(scoreDocs))
 
             # Highlight the matching text in red
             highlighter = Highlighter(SimpleHTMLFormatter('<b><font color\

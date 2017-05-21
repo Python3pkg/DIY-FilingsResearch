@@ -12,7 +12,7 @@ import lucene
 
 def quit_gracefully(*args):
     queryer.writer.close()
-    print "Cleaning up and terminating"
+    print("Cleaning up and terminating")
     exit(0)
 
 # always declare the signal handler first
@@ -20,7 +20,7 @@ signal.signal(signal.SIGINT, quit_gracefully)
 
 env = lucene.initVM()
 queryer = Queryer("index", "hits")
-print 'Using Directory: ', queryer.store_dir
+print('Using Directory: ', queryer.store_dir)
 
 # directory for storing downloaded docs
 directoryToWalk = "docs"

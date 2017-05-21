@@ -1,14 +1,14 @@
 #! /usr/bin/env python
 # encoding: utf-8
 
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 
 
 def download_file(url):
 
         local_filename = url.split('/')[-1]
-        req = urllib2.Request(url)
-        response = urllib2.urlopen(req)
+        req = urllib.request.Request(url)
+        response = urllib.request.urlopen(req)
         with open(local_filename, 'w') as f:
                 f.write(response.read())
         return local_filename

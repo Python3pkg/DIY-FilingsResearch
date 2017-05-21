@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # encoding: utf-8
 
-from __future__ import absolute_import, print_function
+
 
 import xml.etree.ElementTree as ET
 from lxml import etree
@@ -17,12 +17,12 @@ import os
 import re
 
 try:
-    import httplib
+    import http.client
 except ImportError:
     import http.client as httplib
 
 try:
-    from StringIO import StringIO
+    from io import StringIO
 except ImportError:
     from io import StringIO
 
@@ -206,7 +206,7 @@ class Sedar():
                 driver.get_cookies()
             except selenium.common.exceptions.NoSuchWindowException:
                 break
-            except httplib.BadStatusLine:
+            except http.client.BadStatusLine:
                 break
 
         Timer(accept_cookies[0]['expiry'], self.restart, ()).start()
